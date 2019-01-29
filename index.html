@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>NPS Park Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+  <main role="main">
+
+    <form role="form">
+
+      <fieldset role="search">
+
+        <legend>NPS Park Search</legend>
+
+        <label for="query-term">Enter state(s) you would like to find parks in: </label>
+        <input type="text" name="query-term" id="query-term" required>
+
+        <label for="query-limit">Enter max number of results: </label>
+        <input type="number" name="query-limit" id="query-limit" value="10" required> 
+        
+        <button type="submit">Search</button>
+      </fieldset>
+    </form>
+
+    <section id="results" class="hidden" role="presentation">
+      <h2>Search Results</h2>
+      <ul id="results-list">
+      </ul>
+    </section>
+  </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
