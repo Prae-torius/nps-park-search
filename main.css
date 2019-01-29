@@ -23,6 +23,11 @@ label {
   display: block;
 }
 
+#error-result {
+  color: red;
+  font-weight: bold;
+}
+
 ul {
   list-style-type: none;
 }

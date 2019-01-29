@@ -9,14 +9,21 @@ function formatQueryParams(params) {
 }
 
 function displayResults(responseJson) {
-  $('#results-list').empty();
   for(let i = 0; i < responseJson.data.length; i++) {
-   console.log(responseJson.data[i])
-    $('#results-list').append(`<li><h3>Park Name: ${responseJson.data[i].fullName}</h3><p>Description: ${responseJson.data[i].description}</p> Website: <a href="${responseJson.data[i].url}">${responseJson.data[i].url}</a></li>`)
+  $('#results-list').append(`<li><h3>Park Name: ${responseJson.data[i].fullName}</h3><h4>States: ${responseJson.data[i].states}</h4><p>Description: ${responseJson.data[i].description}</p> Website: <a href="${responseJson.data[i].url}">${responseJson.data[i].url}</a></li>`)
   }
-
   $('#results').removeClass('hidden');
 }
+
+function displayError(queryTerm) {
+  $('#error-result').append(`<p>${queryTerm} is not a state</p>`);
+  $('#error-result').removeClass('hidden');
+ }
+
+ function emptyResults() {
+  $('#error-result').empty();
+  $('#results-list').empty();
+ }
 
 function getParks(queryTerm, maxResults) {
   const params = {
@@ -36,18 +43,26 @@ function getParks(queryTerm, maxResults) {
       }
       throw new Error(response.statusText);
     })  
-    .then(responseJson => displayResults(responseJson))  
-    .catch(err => alert(`Something went wrong: ${err.message}`));
+    .then(responseJson => {
+      if (responseJson.total === 0) {
+        displayError(queryTerm);
+      }
+      displayResults(responseJson);
+      return maxResults -= responseJson.data.length;
+    })
+    .catch(err => console.log(`Something went wrong: ${err.message}`));
 }
 
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-
-    const queryTerm = $('#query-term').val();
-    const maxResults = $('#query-limit').val();
-
-    getParks(queryTerm, maxResults);
+    emptyResults();
+    const queryTerms = $('#query-term').val().replace(/,/g, '').split(' ');
+    let maxResults = $('#query-limit').val();
+    
+    for (let i = 0; i < queryTerms.length; i++) {
+      getParks(queryTerms[i], maxResults);   
+    }
   });
 }
 
