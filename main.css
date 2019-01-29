@@ -2,13 +2,34 @@
   box-sizing: border-box;
 }
 
+body {
+  font-size: 16px;
+}
+
 main {
   width: 700px;
   margin: 0 auto;
 }
 
+fieldset {
+  border: none;
+}
+
+fieldset > label {
+  margin: 30px 0;
+}
+
+label {
+  display: block;
+}
+
 ul {
   list-style-type: none;
+}
+
+li {
+  border-bottom: 1px solid black;
+  margin-bottom: 50px;
 }
 
 .hidden {
